@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const Dashboard = () => {
@@ -17,7 +17,7 @@ const Dashboard = () => {
                         htmlFor="my-drawer-4"
                         className="btn btn-ghost"
                     >
-                        Dashboard
+                        {user?.displayName}'s Dashboard
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-10 w-10 ml-3"
@@ -34,16 +34,17 @@ const Dashboard = () => {
                         </svg>
                     </label>
                 </div>
+                <Outlet></Outlet>
             </div>
             <div className="drawer-side">
                 <label for="my-drawer-4" className="drawer-overlay"></label>
                 <ul className="menu p-4 overflow-y-auto w-60 mt-12 bg-blue-700 text-white">
                     {/* <!-- Sidebar content here --> */}
                     <li>
-                        <Link to="/customers">Customers</Link>
+                        <Link to="/dashboard">Customers</Link>
                     </li>
                     <li>
-                        <Link to="/orders">Orders</Link>
+                        <Link to="/dashboard/orders">Orders</Link>
                     </li>
                 </ul>
             </div>
