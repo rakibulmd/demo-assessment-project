@@ -9,7 +9,7 @@ const Header = () => {
             </li>
 
             <li>
-                <Link to="/">Home</Link>
+                <Link to="/">Dashboard</Link>
             </li>
         </>
     );
@@ -56,7 +56,9 @@ const Header = () => {
                         <ul className="menu menu-horizontal p-0">{navItems}</ul>
                     </div>
                     <div className="navbar-end">
-                        <button className="btn btn-secondary">LogIn</button>
+                        <Link to="/login" className="btn btn-secondary">
+                            LogIn
+                        </Link>
                     </div>
                 </div>
             </div>
