@@ -1,11 +1,11 @@
 import React from "react";
 
-const Home = () => {
+const Login = () => {
     return (
         <div className="container mx-auto px-2">
-            <h2>This is home</h2>
+            <h2>Please log in</h2>
         </div>
     );
 };
 
-export default Home;
+export default Login;
