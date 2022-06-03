@@ -1,9 +1,16 @@
-import logo from "./logo.svg";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import MiniDrawer from "./Pages/MainContent";
+import Home from "./Pages/Home/Home";
 
 function App() {
-    return <div></div>;
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<Home></Home>}></Route>
+                <Route path="/home" element={<Home></Home>}></Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
