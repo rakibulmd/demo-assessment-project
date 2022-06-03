@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const Login = () => {
     const {
@@ -8,11 +10,12 @@ const Login = () => {
         formState: { errors },
         handleSubmit,
     } = useForm();
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const onLogInSubmit = (data) => {
         console.log(data);
     };
     const handleGoogleSignIn = () => {
-        console.log("clicked");
+        signInWithGoogle();
     };
     return (
         <div className="container mx-auto px-2">
