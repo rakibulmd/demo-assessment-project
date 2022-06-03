@@ -21,9 +21,9 @@ const Header = () => {
         signOut(auth);
     };
     return (
-        <div className="navbar bg-blue-600 text-white sticky top-0">
+        <div className=" bg-blue-600 text-white sticky top-0 shadow">
             <div className="container mx-auto">
-                <div className="navbar">
+                <div className="navbar py-3">
                     <div className="navbar-start">
                         <div className="dropdown">
                             <label

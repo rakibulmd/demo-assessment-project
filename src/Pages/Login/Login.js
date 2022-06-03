@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
     const {
         register,
         formState: { errors },
@@ -17,6 +20,12 @@ const Login = () => {
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate(from, { replace: true });
+        }
+    }, [user, from, navigate]);
     return (
         <div className="container mx-auto px-2">
             <h2>Please log in</h2>
