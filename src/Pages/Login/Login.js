@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,18 +15,20 @@ const Login = () => {
         handleSubmit,
     } = useForm();
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithEmailAndPassword, emailUser, emailLoading, emailError] =
+        useSignInWithEmailAndPassword(auth);
     const onLogInSubmit = (data) => {
-        console.log(data);
+        signInWithEmailAndPassword(data.email, data.password);
     };
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     };
 
     useEffect(() => {
-        if (user) {
+        if (user || emailUser) {
             navigate(from, { replace: true });
         }
-    }, [user, from, navigate]);
+    }, [user, from, navigate, emailUser]);
     return (
         <div className="container mx-auto px-2">
             <h2>Please log in</h2>
@@ -73,7 +76,14 @@ const Login = () => {
                                 </span>
                             )}
                         </div>
-                        <p className="text-rose-600 py-1"></p>
+
+                        <p className="text-rose-600 py-1">
+                            {
+                                emailError?.message
+                                    .split("auth/")[1]
+                                    .split(")")[0]
+                            }
+                        </p>
 
                         <input
                             className="w-full  px-5 py-2 rounded-md btn btn-primary text-white transition-all"
@@ -111,13 +121,9 @@ const Login = () => {
                     </div>
                     <div className="flex justify-center">
                         <div>
-                            {/* <p className="text-rose-600 py-1 text-center">
-                                {
-                                    GoogleError?.message
-                                        .split("auth/")[1]
-                                        .split(")")[0]
-                                }
-                            </p> */}
+                            <p className="text-rose-600 py-1">
+                                {error?.message.split("auth/")[1].split(")")[0]}
+                            </p>
                             <button
                                 onClick={handleGoogleSignIn}
                                 type="button"
