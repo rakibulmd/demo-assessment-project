@@ -2,7 +2,7 @@ import React from "react";
 
 const CustomerRow = ({ customer, index }) => {
     return (
-        <tr>
+        <tr className="hover">
             <th>{index + 1}</th>
             <td>{customer?.profile?.name}</td>
             <td>{customer?.email}</td>

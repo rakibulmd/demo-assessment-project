@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import CustomerRow from "./CustomerRow";
 
 const Customers = () => {
+    const [itemsCount, setItemsCount] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const [pageSize, setPageSize] = useState(5);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [customers, setCustomers] = useState(null);
     useEffect(() => {
         const getData = async () => {
@@ -12,6 +17,16 @@ const Customers = () => {
         };
         getData();
     }, []);
+    useEffect(() => {
+        const get = async () => {
+            const { data } = await axios.get(
+                `http://localhost:5000/customerCount`
+            );
+            setPageCount(Math.ceil(data.count / pageSize));
+            setItemsCount(data.count);
+        };
+        get();
+    }, [pageSize]);
     if (!customers) {
         return <div>Loading</div>;
     }
@@ -50,6 +65,21 @@ const Customers = () => {
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+            <div className="btn-group flex justify-center py-3 mb-12">
+                {[...Array(pageCount).keys()].map((number) => (
+                    <button
+                        className={
+                            currentPage === number
+                                ? "btn  bg-secondary hover:bg-primary text-black hover:text-white"
+                                : "btn"
+                        }
+                        onClick={() => setCurrentPage(number)}
+                        key={number}
+                    >
+                        {number + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );
