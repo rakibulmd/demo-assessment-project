@@ -5,7 +5,10 @@ const Home = () => {
         <div className="bg-blue-700 text-white">
             <div className="container mx-auto px-2  h-screen flex justify-start items-center">
                 <div>
-                    <h2 className="text-5xl">Welcome to Demo Project</h2>
+                    <h2 className="text-5xl mb-5">Welcome to Demo Project</h2>
+                    <button className="btn btn-secondary">
+                        Go To Dashboard
+                    </button>
                 </div>
             </div>
         </div>

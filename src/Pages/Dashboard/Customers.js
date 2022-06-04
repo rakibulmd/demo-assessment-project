@@ -28,7 +28,11 @@ const Customers = () => {
         get();
     }, [pageSize]);
     if (!customers) {
-        return <div>Loading</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <button class="btn loading">loading</button>
+            </div>
+        );
     }
     return (
         <div>
