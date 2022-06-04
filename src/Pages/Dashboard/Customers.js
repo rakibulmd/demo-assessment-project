@@ -11,7 +11,7 @@ const Customers = () => {
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(
-                `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}`
+                `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}`
             );
             console.log(response);
             setCustomers(response.data);
@@ -21,7 +21,7 @@ const Customers = () => {
     useEffect(() => {
         const get = async () => {
             const { data } = await axios.get(
-                `http://localhost:5000/customerCount`
+                `https://assessment-project-server.herokuapp.com/customerCount`
             );
             setPageCount(Math.ceil(data.count / pageSize));
         };
