@@ -7,12 +7,13 @@ const Customers = () => {
     const [pageSize, setPageSize] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [customers, setCustomers] = useState(null);
+    const [customersCount, setCustomersCount] = useState(0);
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(
                 `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}`
             );
-            console.log(response);
+
             setCustomers(response.data);
         };
         getData();
@@ -23,6 +24,7 @@ const Customers = () => {
                 `https://assessment-project-server.herokuapp.com/customerCount`
             );
             setPageCount(Math.ceil(data.count / pageSize));
+            setCustomersCount(data.count);
         };
         get();
     }, [pageSize]);
@@ -70,6 +72,19 @@ const Customers = () => {
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+            <div className="">
+                <p className="text-center">{`Showing ${pageSize} of ${customersCount} entries`}</p>
+                <div className="flex justify-center pt-3">
+                    <select
+                        onChange={(event) => setPageSize(event.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
+                    >
+                        <option selected>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                    </select>
+                </div>
             </div>
             <div className="btn-group flex justify-center py-3 mb-12">
                 {[...Array(pageCount).keys()].map((number) => (
