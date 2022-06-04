@@ -8,6 +8,14 @@ const Customers = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [customers, setCustomers] = useState(null);
     const [customersCount, setCustomersCount] = useState(0);
+    const handlePageSizeChange = (event) => {
+        event.preventDefault();
+        setPageSize(event.target.value);
+
+        if (pageSize < currentPage) {
+            setCurrentPage(0);
+        }
+    };
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(
@@ -77,7 +85,7 @@ const Customers = () => {
                 <p className="text-center">{`Showing ${pageSize} of ${customersCount} entries`}</p>
                 <div className="flex justify-center pt-3">
                     <select
-                        onChange={(event) => setPageSize(event.target.value)}
+                        onChange={handlePageSizeChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
                     >
                         <option selected>5</option>
