@@ -2,9 +2,7 @@ import React from "react";
 
 const Orders = () => {
     return (
-        <div>
-            <h2>This is orders</h2>
-        </div>
+        <h2 className="text-3xl text-center py-3  pb-7 uppercase">Orders</h2>
     );
 };
 

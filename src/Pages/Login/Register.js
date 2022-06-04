@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
+import {
+    useCreateUserWithEmailAndPassword,
+    useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const Register = () => {
+    const navigate = useNavigate();
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm();
-    const onSubmit = (data) => {};
-
+    const [
+        createUserWithEmailAndPassword,
+        registerUser,
+        registerLoading,
+        registerError,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, error] = useUpdateProfile(auth);
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+    };
+    useEffect(() => {
+        if (registerUser) {
+            navigate("/home");
+        }
+    }, [navigate, registerUser]);
     return (
         <div className="container mx-auto px-2">
             <h2>Please log in</h2>
@@ -20,12 +40,12 @@ const Register = () => {
                         <div className="mb-5">
                             <label
                                 htmlFor="name"
-                                className="block mb-2 text-sm font-medium text-white"
+                                className="block mb-2 text-sm font-medium"
                             >
                                 Your Name:
                             </label>
                             <input
-                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md block w-full p-2.5  placeholder-secondary/75 text-black  border-secondary"
+                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md block w-full p-2.5  placeholder-black/75 text-black  border-primary"
                                 type="text"
                                 placeholder="name"
                                 {...register("name", {
@@ -42,12 +62,12 @@ const Register = () => {
                         <div className="mb-5">
                             <label
                                 htmlFor="name"
-                                className="block mb-2 text-sm font-medium text-white"
+                                className="block mb-2 text-sm font-medium"
                             >
                                 Email:
                             </label>
                             <input
-                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md block w-full p-2.5  placeholder-secondary/75 text-black  border-secondary"
+                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md block w-full p-2.5  placeholder-black/75 text-black  border-primary"
                                 type="email"
                                 placeholder="Enter email"
                                 autoComplete="off"
@@ -62,12 +82,12 @@ const Register = () => {
                         <div className="mb-5">
                             <label
                                 htmlFor="name"
-                                className="block mb-2 text-sm font-medium text-white"
+                                className="block mb-2 text-sm font-medium"
                             >
                                 Password:
                             </label>
                             <input
-                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md   block w-full p-2.5  placeholder-secondary/75  text-black  border-secondary"
+                                className="focus:outline-none focus:ring focus:ring-primary border text-sm rounded-md block w-full p-2.5  placeholder-black/75 text-black  border-primary"
                                 type="password"
                                 placeholder="password"
                                 {...register("password", {
@@ -77,7 +97,7 @@ const Register = () => {
                             />
                             {errors.password?.type === "required" && (
                                 <span className="text-rose-600">
-                                    Please enter your password
+                                    Please enter password
                                 </span>
                             )}
                             {errors.password?.type === "minLength" && (
@@ -86,13 +106,13 @@ const Register = () => {
                                 </span>
                             )}
                         </div>
-                        {/* <p className="text-rose-600 py-1">
-                                {
-                                    registerError?.message
-                                        .split("auth/")[1]
-                                        .split(")")[0]
-                                }
-                            </p> */}
+                        <p className="text-rose-600 py-1">
+                            {
+                                registerError?.message
+                                    .split("auth/")[1]
+                                    .split(")")[0]
+                            }
+                        </p>
 
                         <input
                             className="w-full  px-5 py-2 rounded-md btn btn-primary transition-all"
@@ -103,22 +123,11 @@ const Register = () => {
                         <div className="mt-5">
                             <p className="">
                                 Already registered?{" "}
-                                <button
-                                    className="underline text-emerald-400"
-                                    onClick={() => {}}
+                                <Link
+                                    to="/login"
+                                    className="underline text-blue-600"
                                 >
                                     Click here to login...
-                                </button>{" "}
-                            </p>
-                        </div>
-                        <div className="mt-5">
-                            <p>
-                                Forgot Password?{" "}
-                                <Link
-                                    className="underline text-emerald-400"
-                                    to="/resetpassword"
-                                >
-                                    Reset Now...
                                 </Link>{" "}
                             </p>
                         </div>
