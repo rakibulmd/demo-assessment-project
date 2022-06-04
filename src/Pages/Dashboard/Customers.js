@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import CustomerRow from "./CustomerRow";
 
 const Customers = () => {
-    const [itemsCount, setItemsCount] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
@@ -11,19 +10,20 @@ const Customers = () => {
     const [customers, setCustomers] = useState(null);
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get("http://localhost:5000/customers");
+            const response = await axios.get(
+                `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}`
+            );
             console.log(response);
             setCustomers(response.data);
         };
         getData();
-    }, []);
+    }, [pageCount, pageSize, currentPage]);
     useEffect(() => {
         const get = async () => {
             const { data } = await axios.get(
                 `http://localhost:5000/customerCount`
             );
             setPageCount(Math.ceil(data.count / pageSize));
-            setItemsCount(data.count);
         };
         get();
     }, [pageSize]);
@@ -52,6 +52,8 @@ const Customers = () => {
                                 key={customer._id}
                                 customer={customer}
                                 index={index}
+                                pageSize={pageSize}
+                                currentPage={currentPage}
                             ></CustomerRow>
                         ))}
                     </tbody>
