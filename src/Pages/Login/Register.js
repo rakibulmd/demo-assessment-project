@@ -21,7 +21,7 @@ const Register = () => {
         registerLoading,
         registerError,
     ] = useCreateUserWithEmailAndPassword(auth);
-    const [updateProfile, updating, error] = useUpdateProfile(auth);
+    const [updateProfile] = useUpdateProfile(auth);
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
@@ -114,11 +114,15 @@ const Register = () => {
                             }
                         </p>
 
-                        <input
-                            className="w-full  px-5 py-2 rounded-md btn btn-primary transition-all"
-                            type="submit"
-                            value="Register"
-                        />
+                        {registerLoading ? (
+                            <button class="btn loading w-full">loading</button>
+                        ) : (
+                            <input
+                                className="w-full  px-5 py-2 rounded-md btn btn-primary transition-all"
+                                type="submit"
+                                value="Register"
+                            />
+                        )}
 
                         <div className="mt-5">
                             <p className="">

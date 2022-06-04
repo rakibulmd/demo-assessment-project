@@ -6,7 +6,6 @@ const Customers = () => {
     const [pageCount, setPageCount] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
-    const [loading, setLoading] = useState(false);
     const [customers, setCustomers] = useState(null);
     useEffect(() => {
         const getData = async () => {
