@@ -9,7 +9,7 @@ const RequireAuth = ({ children }) => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <button class="btn loading">loading</button>
+                <button className="btn loading">loading</button>
             </div>
         );
     }

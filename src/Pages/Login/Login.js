@@ -84,7 +84,9 @@ const Login = () => {
                         </p>
 
                         {emailLoading ? (
-                            <button class="btn loading w-full">loading</button>
+                            <button className="btn loading w-full">
+                                loading
+                            </button>
                         ) : (
                             <input
                                 className="w-full  px-5 py-2 rounded-md btn btn-primary text-white transition-all"

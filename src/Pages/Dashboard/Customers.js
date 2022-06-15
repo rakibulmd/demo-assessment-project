@@ -39,7 +39,7 @@ const Customers = () => {
     if (!customers) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <button class="btn loading">loading</button>
+                <button className="btn loading">loading</button>
             </div>
         );
     }
@@ -48,8 +48,8 @@ const Customers = () => {
             <h2 className="text-3xl text-center py-3  pb-7 uppercase">
                 Customers
             </h2>
-            <div class="overflow-x-auto p-3">
-                <table class="table table-compact w-full text-black">
+            <div className="overflow-x-auto p-3">
+                <table className="table table-compact w-full text-black">
                     <thead>
                         <tr>
                             <th></th>
